@@ -1,0 +1,94 @@
+// Place all the styles related to the ratings controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+// Star Rating
+.controls {
+  background: #eee none repeat scroll 0 0;
+  border-radius: 3px;
+  height: 0.5em;
+  margin-bottom: 0.5em;
+  position: relative;
+  .progresss {
+    background: #5bc0de none repeat scroll 0 0;
+    border-color: #46b8da;
+    border-bottom-left-radius: 3px;
+    border-top-left-radius: 3px;
+    height: 100%;
+    // width: 20%;
+    transition: width 0.5s ease-in;
+  }
+  .step {
+    background: black none repeat scroll 0 0;
+    border-radius: 0.5em;
+    height: 1em;
+    position: absolute;
+    top: -0.25em;
+    width: 1em;
+    transition: all 0.5s ease-in;
+    outline: none;
+   &.step-1 {
+     left: 23.33%;
+   }
+   &.step-2 {
+     left: 76.66%;
+   }
+   &.step-3 {
+     left: 95.00%;
+   }
+   &.active {
+     box-shadow: 0 0 1em rgba(0,0,0,0.5);
+   }
+  }
+}
+.form-partials-container{
+  padding: 0 1em;
+  border: 0.05em #eee solid;
+  border-radius: 6px;
+  .left-form{
+    border-right: 1px solid #eee;
+  }
+}
+.star-rating {
+  $starcolor_firstselect: #FFD700;
+  $starcolor_secondselect: #FF0000;//#FFED85;
+  $star_full: "\f005";
+  $star_half: "\f089";
+
+    &:not(:checked){
+      > label:hover,
+      > label:hover ~ label {color: $starcolor_firstselect;}
+    }
+
+    > .half:before{
+      content: $star_half;
+      position: absolute;
+    }
+
+    > input {
+      display: none;
+      &:checked {
+        ~ label { color: $starcolor_firstselect;}
+        + label:hover,
+        ~ label:hover,
+        ~ label:hover ~ label {color: $starcolor_secondselect;}
+      }
+    }
+
+    > label {
+      color: #ddd;
+      float: right;
+      &:before {
+        margin: 5px;
+        display:inline-block;
+        font-family: FontAwesome;
+        font-size: 1.25em;
+        content:$star_full;
+      }
+      &:hover {
+        ~ input:checked ~ label {color: $starcolor_secondselect}
+      }
+    }
+    &:not([readonly]){
+    }
+
+}

@@ -1,0 +1,64 @@
+@charset "UTF-8";
+.controls {
+  background: #eee none repeat scroll 0 0;
+  border-radius: 3px;
+  height: 0.5em;
+  margin-bottom: 0.5em;
+  position: relative; }
+  .controls .progresss {
+    background: #5bc0de none repeat scroll 0 0;
+    border-color: #46b8da;
+    border-bottom-left-radius: 3px;
+    border-top-left-radius: 3px;
+    height: 100%;
+    transition: width 0.5s ease-in; }
+  .controls .step {
+    background: black none repeat scroll 0 0;
+    border-radius: 0.5em;
+    height: 1em;
+    position: absolute;
+    top: -0.25em;
+    width: 1em;
+    transition: all 0.5s ease-in;
+    outline: none; }
+    .controls .step.step-1 {
+      left: 23.33%; }
+    .controls .step.step-2 {
+      left: 76.66%; }
+    .controls .step.step-3 {
+      left: 95.00%; }
+    .controls .step.active {
+      box-shadow: 0 0 1em rgba(0, 0, 0, 0.5); }
+
+.form-partials-container {
+  padding: 0 1em;
+  border: 0.05em #eee solid;
+  border-radius: 6px; }
+  .form-partials-container .left-form {
+    border-right: 1px solid #eee; }
+
+.star-rating:not(:checked) > label:hover,
+.star-rating:not(:checked) > label:hover ~ label {
+  color: #FFD700; }
+.star-rating > .half:before {
+  content: "";
+  position: absolute; }
+.star-rating > input {
+  display: none; }
+  .star-rating > input:checked ~ label {
+    color: #FFD700; }
+  .star-rating > input:checked + label:hover,
+  .star-rating > input:checked ~ label:hover,
+  .star-rating > input:checked ~ label:hover ~ label {
+    color: #FF0000; }
+.star-rating > label {
+  color: #ddd;
+  float: right; }
+  .star-rating > label:before {
+    margin: 5px;
+    display: inline-block;
+    font-family: FontAwesome;
+    font-size: 1.25em;
+    content: ""; }
+  .star-rating > label:hover ~ input:checked ~ label {
+    color: #FF0000; }
