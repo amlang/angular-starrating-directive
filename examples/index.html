@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+  <meta charset="utf-8">
+  <title>AngularJS StarRating Examples</title>
+
+  <link rel="shortcut icon" type="image/png" href="#">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../src/css/ratings.css">
+</head>
+
+<body class="container" ng-controller="MyCtrl">
+  <form name="myForm" class=" form col-md-6" >
+    <star-rating data-ratingsubject="5 stars (with halfs)" ng-model="rating.firstrating"></star-rating>
+    <star-rating data-ratingsubject="5 stars (without halfs)" nohalfs ng-model="rating.secondrating"></star-rating>
+    <star-rating data-ratingsubject="9 stars (18 rating levels)" data-staramount="9" ng-model="rating.thirdrating"></star-rating>
+    <pre>{{rating}}</pre>
+  </form>
+
+
+  <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.js'></script>
+  <script src="../src/js/star-rating.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
