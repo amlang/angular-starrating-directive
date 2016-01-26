@@ -3,45 +3,48 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 // Star Rating
 .star-rating {
+  $default_color: #ddd;
   $starcolor_firstselect: #FFD700;
   $starcolor_secondselect: #FFED85;
   $star_full: "\f005";
   $star_half: "\f089";
+  &.readonly{
+    > label:hover,
+    > label:hover ~ label{
+      color: $default_color;
+    }
+    > input:checked ~ label,
+    > input:checked ~ label:hover{ color: $starcolor_firstselect !important;}
+  }
+  > .half:before{
+    content: $star_half;
+    position: absolute;
+  }
 
-    &:not(:checked){
-      > label:hover,
-      > label:hover ~ label {color: $starcolor_firstselect;}
+  > input {
+    display: none;
+    &:checked {
+      ~ label { color: $starcolor_firstselect;}
+      + label:hover,
+      ~ label:hover,
+      ~ label:hover ~ label {color: $starcolor_secondselect;}
     }
+  }
 
-    > .half:before{
-      content: $star_half;
-      position: absolute;
+  > label {
+    color: $default_color;
+    float: right;
+    &:before {
+      margin: 5px;
+      display:inline-block;
+      font-family: FontAwesome;
+      font-size: 1.25em;
+      content:$star_full;
     }
-
-    > input {
-      display: none;
-      &:checked {
-        ~ label { color: $starcolor_firstselect;}
-        + label:hover,
-        ~ label:hover,
-        ~ label:hover ~ label {color: $starcolor_secondselect;}
-      }
+    &:hover {
+      &,
+      & ~ label {color: $starcolor_firstselect;}
+      ~ input:checked ~ label {color: $starcolor_secondselect}
     }
-
-    > label {
-      color: #ddd;
-      float: right;
-      &:before {
-        margin: 5px;
-        display:inline-block;
-        font-family: FontAwesome;
-        font-size: 1.25em;
-        content:$star_full;
-      }
-      &:hover {
-        ~ input:checked ~ label {color: $starcolor_secondselect}
-      }
-    }
-    &:not([readonly]){
-    }
+  }
 }

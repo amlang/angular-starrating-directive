@@ -13,9 +13,20 @@
 <body class="container" ng-controller="MyCtrl">
   <form name="myForm" class=" form col-md-6" >
     <star-rating data-ratingsubject="5 stars (with halfs)" ng-model="rating.firstrating"></star-rating>
-    <star-rating data-ratingsubject="5 stars (without halfs)" nohalfs ng-model="rating.secondrating"></star-rating>
-    <star-rating data-ratingsubject="9 stars (18 rating levels)" data-staramount="9" ng-model="rating.thirdrating"></star-rating>
+    <star-rating data-ratingsubject="5 stars (readonly)" readonly ng-model="rating.secondrating"></star-rating>
+    <star-rating data-ratingsubject="5 stars (without halfs)" nohalfs ng-model="rating.thirdrating"></star-rating>
+    <star-rating data-ratingsubject="9 stars (18 rating levels)" data-staramount="9" ng-model="rating.fourthrating"></star-rating>
+    <star-rating data-ratingsubject="9 stars (3.5 pre selected)" data-staramount="9" ng-model="rating.fifthrating"></star-rating>
+    <star-rating data-ratingsubject="9 stars (3.5 pre selected readonly)" readonly data-staramount="9" ng-model="rating.sixthrating"></star-rating>
     <pre>{{rating}}</pre>
+  <pre>{{form.firstrating | json}}</pre>
+  <pre>{{form.secondrating | json}}</pre>
+  <pre>{{form.thirdrating | json}}</pre>
+  <pre>{{form.fourthrating | json}}</pre>
+  <pre>{{form.fifthrating | json}}</pre>
+  <pre>{{form.sixthrating | json}}</pre>
+
+
   </form>
 
 

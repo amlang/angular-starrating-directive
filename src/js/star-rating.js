@@ -18,102 +18,102 @@ angular.module('starRating',[])
   };
 })
 .directive('starRating',['starRatingData','$rootScope',function(starRatingData,$rootScope){
-  var guid = starRatingData.create_new_guid().get_guid();
   var template = function(element, attrs){
-    if(!angular.isDefined(attrs.ngModel)){
-      throw "star-rating dependency failure: ngModel is not defined!";
-      // element.attr('ng-model','rating.'+guid);
-      // var $injector = element.injector();
-      // $injector.invoke(function($compile){
-      //   $compile(element)($rootScope);
-      // });
-    }
     var starTemplateWithVars ='\
-    <input id="##id##" type="radio" value="##value##" name="fieldName" ng-model="fieldModelName"/>\
+    <input id="##id##" ##readonly## type="radio" value="##value##" name="fieldName" ng-model="fieldModelName"/>\
     <label for="##id##" class="##class##"></label>';
 
     var templateWithVars = '<div class="row starrating">\
     <div class="col-md-6">ratingsubject</div>\
     <div class="col-md-6 text-right">\
-    <div class="star-rating">\
+    <div class="star-rating ##readonly##" ##controller## >\
     ##stars##\
     </div>\
     </div>\
     </div>\
     ';
     var fieldModelName = get_modelname(attrs);
-    var stars = "";
+    var stars = "", ctrl = "";
     var staramount = attrs.staramount || 5;
     var nohalfs = angular.isDefined(attrs.nohalfs);
     var step = (nohalfs)?1:0.5;
 
+    var star_readonly = (angular.isDefined(attrs.readonly) || angular.isDefined(attrs.ngReadonly))?'ng-disabled="true" ng-readonly="true"':"";
+    var readonly = (angular.isDefined(attrs.readonly) || angular.isDefined(attrs.ngReadonly))?'readonly':"";
     for (var i = staramount, turn = 1; i > 0; i = i-step, turn++) {
       var even = turn % 2;
       var newStarTemplate = "";
       if(!nohalfs){
-        newStarTemplate = starTemplateWithVars.replace(/##class##/,(even)?'full':'half');
+         newStarTemplate = starTemplateWithVars.replace(/##class##/,(even)?'full':'half');
       }else {
-        newStarTemplate = starTemplateWithVars.replace(/class="##class##"/,'');
+          newStarTemplate = starTemplateWithVars.replace(/class="##class##"/,'');
+      }
+
+      if(angular.isDefined(attrs.controller)){
+        ctrl = "ng-controller='"+ attrs.controller + "'";
       }
       var id =  fieldModelName.replace('.','_');
       id+= "_star_";
       id+= !even ? (''+i).replace('.','_') : i;
-      stars += newStarTemplate.replace(/##value##/,i).replace(/##id##/g,id);
+      stars += newStarTemplate.replace(/##value##/,i).replace(/##id##/g,id).replace(/##readonly##/,star_readonly);
     }
     var template = templateWithVars
     .replace(/ratingsubject/g, attrs.ratingsubject || "")
     .replace(/##stars##/,stars)
-    .replace(/fieldName/g, get_fieldname(attrs))
-    .replace(/fieldModelName/g, get_modelname(attrs));
+    .replace(/##readonly##/,readonly)
+    .replace(/fieldName/g, get_modelname(attrs))
+    .replace(/fieldModelName/g, get_name(attrs).join('.'))
+    .replace(/##controller##/,ctrl);
     return template;
   }
 
   var get_name = function(attrs){
-    var modelAndField = angular.isDefined(attrs.ngModel)?attrs.ngModel:'starrating.'+guid;
+    var modelAndField = attrs.ngModel;
     var names = modelAndField.split('.');
-    names.shift();
     return names;
   }
 
   var get_fieldname = function(attrs){
     var names = get_name(attrs);
-    var model;
-    if(angular.isArray(names)){
-      model = names.shift();
-      var fieldname = "";
-      angular.forEach(names, function(value, key) {
-        fieldname += "["+value+"]";
-      });
-      fieldname = model+fieldname;
-    }
-    else if(angular.isString(names)){
-      fieldname = names;
-    }
-
+    names.shift();
+    var model = names.shift();
+    var fieldname = "";
+    angular.forEach(names, function(value, key) {
+      fieldname += "["+value+"]";
+    });
+    fieldname = model+fieldname;
     return fieldname;
   }
   var get_modelname = function(attrs){
     var names = get_name(attrs);
-    var fieldname = angular.isArray(names)? names[names.length -1] : names;
+    names.shift();
+    var fieldname = names[names.length -1];
     return fieldname;
   };
+
   return {
     restrict: 'E',
     replace: false,
-    controller: function($scope) {},
+    controller: function($scope){},
     require: ['^form', 'ngModel'],
-    scope: {},
     template: template,
     link: function($scope, elem, attrs, ctrls){
-      //console.log(ctrls);
       $scope.form = ctrls[0];
       var ngModel = ctrls[1];
-      var fieldModelName = get_modelname(attrs);
+
+            var fieldModelName = get_modelname(attrs);
 
       $scope.$watch(fieldModelName, function() {
-        ngModel.$setViewValue($scope[fieldModelName]);
+        var val = $scope[fieldModelName];
+        if(val === undefined){
+          val = eval('$scope.'+ attrs.ngModel);
+        }
+
+        ngModel.$setViewValue(val);
+        ngModel.$render();
         ngModel.$commit
       });
+
     }
   };
 }]);
