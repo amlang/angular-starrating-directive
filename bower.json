@@ -1,7 +1,7 @@
 {
   "name": "angular-starrating-directive",
   "homepage": "https://github.com/amlang/angular-starrating-directive",
-  "author": https://github.com/amlang/angular-starrating-directive/graphs/contributors,
+  "author": "https://github.com/amlang/angular-starrating-directive/graphs/contributors",
   "description": "AngularJS directive for creating rating form fields",
   "main": "/src/js/star-rating.js",
   "dependencies": {
