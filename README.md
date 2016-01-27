@@ -1,5 +1,6 @@
 # Angular Starrating Directive
 [![Build Status](https://travis-ci.org/amlang/angular-starrating-directive.svg?branch=master)](https://travis-ci.org/amlang/angular-starrating-directive.svg?branch=master)
+
 [AngularJS](http://angularjs.org/) directive for creating "starrating" form fields
 
 ## Examples
